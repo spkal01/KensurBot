@@ -124,7 +124,7 @@ async def pipcheck(pip):
 @register(outgoing=True, pattern=r"^\.alive$")
 async def amireallyalive(alive):
     """ For .alive command, check if the bot is running.  """
-    await alive.edit("**KensurBot v1.0 is up and running!**\n\n"
+    await alive.edit("**Spkal-Userbot is up and running!**\n\n"
                      f"**Telethon:** {version.__version__}\n"
                      f"**Python:** {python_version()}\n"
                      f"**User:** {DEFAULTUSER}")
