@@ -205,7 +205,7 @@ async def twrp(request):
     else:
         await request.edit("**Usage:** `.aicp <codename>`")
         return                    
-    url = get(f"https://files.spkal01.tech/Aicp/latest/aicp_davinci_r-16.1-UNOFFICIAL-GAPPS-20210114.zip/")
+    url = get(f"https://files.spkal01.tech/Aicp/latest/")
     if url.status_code == 404:
         reply = f"**Couldn't find aicp downloads for** `{device}`!`\n"
         await request.edit(reply)
