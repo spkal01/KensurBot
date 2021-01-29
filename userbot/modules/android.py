@@ -193,6 +193,34 @@ async def twrp(request):
              f"**Updated:** __{date}__\n")
     await request.edit(reply)
 
+@register(outgoing=True, pattern=r"^.aicp(?: |$)(\S*)")
+async def twrp(request):
+    """ get latest aicp build """
+    textx = await request.get_reply_message()
+    device = request.pattern_match.group(1)
+    if device:
+        pass
+    elif textx:
+        device = textx.text.split(" ")[0]
+    else:
+        await request.edit("**Usage:** `.aicp <codename>`")
+        return                    
+    url = get(f"https://files.spkal01.tech/Aicp/latest/aicp_davinci_r-16.1-UNOFFICIAL-GAPPS-20210114.zip/")
+    if url.status_code == 404:
+        reply = f"**Couldn't find aicp downloads for** `{device}`!`\n"
+        await request.edit(reply)
+        return
+    page = BeautifulSoup(url.content, "lxml")
+    download = page.find("table").find("tr").find("a")
+    dl_link = f"https://files.spkal01.tech/Aicp/latest/aicp_davinci_r-16.1-UNOFFICIAL-GAPPS-20210114.zip['href']"
+    dl_file = download.text
+    size = page.find("span", {"class": "filesize"}).text
+    date = page.find("em").text.strip()
+    reply = (f"**Latest Aicp for {device}:**\n"
+             f"[{dl_file}]({dl_link}) - __{size}__\n"
+             f"**Updated:** __{date}__\n")
+    await request.edit(reply)                      
+                      
 
 CMD_HELP.update({
     "android":
@@ -200,6 +228,8 @@ CMD_HELP.update({
     "\nGet latest Magisk releases"
     "\n\n>`.device <codename>`"
     "\nUsage: Get info about android device codename or model."
+    "\n\n>`.aicp <codename>`"
+    "\nUsage: Get latest aicp build"    
     "\n\n>`.codename <brand> <device>`"
     "\nUsage: Search for android device codename."
     "\n\n>`.specs <brand> <device>`"
