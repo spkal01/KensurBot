@@ -213,11 +213,10 @@ async def twrp(request):
     page = BeautifulSoup(url.content, "lxml")
     download = page.find("table").find("tr").find("a")
     dl_link = f"https://files.spkal01.tech/Aicp/latest/aicp_davinci_r-16.1-UNOFFICIAL-GAPPS-20210114.zip['href']"
-    dl_file = download.text
     size = page.find("span", {"class": "filesize"}).text
     date = page.find("em").text.strip()
     reply = (f"**Latest Aicp for {device}:**\n"
-             f"[{dl_file}]({dl_link}) - __{size}__\n"
+             f"[aicp_davinci_r-16.1-UNOFFICIAL-GAPPS-20210114.zip]({dl_link}) - __{size}__\n"
              f"**Updated:** __{date}__\n")
     await request.edit(reply)                      
                       
